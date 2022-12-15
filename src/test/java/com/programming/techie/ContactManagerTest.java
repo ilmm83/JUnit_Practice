@@ -66,6 +66,14 @@ class ContactManagerTest {
         assertEquals(1, cm.getAllContacts().size());
     }
 
+    // Repeated test
+    @DisplayName("Repeat creation of a Contact")
+    @RepeatedTest(value = 5, name = "{currentRepetition} of {totalRepetitions}")
+    public void createContactSpecifiedAmountOfTimes() {
+        cm.addContact("John", "Doe", "0123456789");
+        assertFalse(cm.getAllContacts().isEmpty());
+        assertEquals(1, cm.getAllContacts().size());
+    }
 
     @AfterAll
     public void printAfterAll() {
