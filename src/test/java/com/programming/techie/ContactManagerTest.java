@@ -3,6 +3,8 @@ package com.programming.techie;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,6 +73,16 @@ class ContactManagerTest {
     @RepeatedTest(value = 5, name = "{currentRepetition} of {totalRepetitions}")
     public void createContactSpecifiedAmountOfTimes() {
         cm.addContact("John", "Doe", "0123456789");
+        assertFalse(cm.getAllContacts().isEmpty());
+        assertEquals(1, cm.getAllContacts().size());
+    }
+
+    // Parameterized test
+    @DisplayName("Repeat contact creation")
+    @ParameterizedTest
+    @ValueSource(strings = {"0123456789", "0123456789", "0123456789", "+0123456789"})
+    public void shouldTestContactCreationUsingValueSource(String phonenumber) {
+        cm.addContact("John", "Doe", phonenumber);
         assertFalse(cm.getAllContacts().isEmpty());
         assertEquals(1, cm.getAllContacts().size());
     }
