@@ -5,12 +5,13 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ContactManagerTest {
 
-    ContactManager cm;
+    private ContactManager cm;
 
     @BeforeAll
-    public static void beforeAllSetUp() {
+    public void beforeAllSetUp() {
         System.out.println("Before all");
     }
 
@@ -36,5 +37,10 @@ class ContactManagerTest {
     public void shouldThrowExceptionWhenFirstNameIsNUll() {
         Assertions.assertThrows(RuntimeException.class,
                 () -> cm.addContact(null, "last", "1234567890"));
+    }
+
+    @AfterAll
+    public void printAfterAll() {
+        System.out.println("After All");
     }
 }
