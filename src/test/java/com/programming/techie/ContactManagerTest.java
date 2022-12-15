@@ -4,7 +4,11 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -85,6 +89,26 @@ class ContactManagerTest {
         cm.addContact("John", "Doe", phonenumber);
         assertFalse(cm.getAllContacts().isEmpty());
         assertEquals(1, cm.getAllContacts().size());
+    }
+
+    @DisplayName("Method Source Case - Phone Number should match the required Format")
+    @ParameterizedTest
+    @MethodSource("phoneNumberList")
+    public void shouldTestPhoneNumberFormatUsingMethodSource(String phoneNumber) {
+        cm.addContact("John", "Doe", phoneNumber);
+        assertFalse(cm.getAllContacts().isEmpty());
+        assertEquals(1, cm.getAllContacts().size());
+    }
+
+    private static List<String> phoneNumberList() {
+        return Arrays.asList("0123456789", "0123456798", "0123456897");
+    }
+
+    @Test
+    @DisplayName("Test Should Be Disabled")
+    @Disabled
+    public void shouldBeDisabled() {
+        throw new RuntimeException("Test Should Not be executed");
     }
 
     @AfterAll
